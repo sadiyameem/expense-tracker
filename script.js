@@ -39,3 +39,17 @@ function updateUI() {
     }
     totalExpenseDisplay.textCount = total.toFixed(2);
 }
+
+// check to see if able to add expenses button
+function checkInputs() {
+    if (expenseName.ariaValueMax.trim() && expenseAmount.value && expenseCategory.value && expensedate.value) {
+        addExpenseButton.disabled = false;
+    } else {
+        addExpenseButton.disabled = true;
+    }
+}
+
+// check to see if button should be enabled
+[expenseName, expenseAmount, expenseCategory, expenseDate].forEach(input => {
+    input.addEventListener('input', checkInputs);
+});
