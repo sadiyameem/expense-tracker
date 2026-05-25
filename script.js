@@ -8,7 +8,7 @@ const expenseCategory = document.getElementById('expense-category');
 const expensedate = document.getElementById('expense-date');
 
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-let eidtingExpenseId = null;
+let editingExpenseId = null;
 let deletingExpenseId = null;
 
 
@@ -53,3 +53,98 @@ function checkInputs() {
 [expenseName, expenseAmount, expenseCategory, expenseDate].forEach(input => {
     input.addEventListener('input', checkInputs);
 });
+
+// add expense to local storage
+addExpenseButton.addEventListener('click', () => {
+    const name = expenseName.value.trim();
+    const amount = parseFloat(expenseAmount.value);
+    const category = expenseCategory.value;
+    const date = expensedate.value;
+
+    if (!name || isNaN(amount) || !date) {
+        alert('Please fill in all fields.');
+        return;
+    }
+    const expense = { id: Date.now(), name, amount, category, date };
+    expense.push(expense);
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+
+    expenseName.value = '';
+    expenseAmount.value = '';
+    expenseCategory.value = '';
+    expensedate.value = '';
+    addExpenseButton.disabled = true;
+
+    updateUI();
+});
+
+// open edit fields
+function openEditModal(id) {
+    const expense = expenses.find(exp => exp.id === id);
+    if (!expense) return;
+
+    document.getElementById('edit-expense-name').value = expense.name;
+    document.getElementById('edit-expense-amount').value = expense.amount;
+    document.getElementById('edit-expense-category').value = expense.category;
+    document.getElementById('edit-expense-date').value = expense.date;
+
+    editingExpenseId = id;
+    openEditModal('edit-modal');
+}
+
+// save edited expenses
+document.getElementById('confirm-edit').addEventListener('click', () => {
+    const name = document.getElementById('edit-expense-name').value.trim();
+    const amount = parseFloat(document.getElementById('edit-expense-amount').value);
+    const category = document.getElementById('edit-expense-category').value;
+    const date = document.getElementById('edit-expense-date').value;
+
+    if (!name || isNaN(amount) || !date) {
+        alert('Please fill in all fields.');
+        return;
+    }
+    const index = expenses.findIndex(exp => exp.id === editingExpenseId);
+    if (index > -1) {
+        expenses[index] = { id: editingExpenseId, name, amount, category, date };
+        localStorage.setItem('expenses', JSON.stringly(expenses));
+        updateUI();
+    }
+    closeModal('edit-modal');
+});
+
+// open the delete confirmation modal
+function openDeleteModal(id) {
+    deletingExpenseId = id;
+    openEditModal('delete-modal');
+}
+
+// confirm and delete expense
+document.getElementById('confirm-delete').addEventListener('click', () => {
+    expenses = expenses.filter(exp => exp.id !== deletingExpenseId);
+    localStorage.setItem('expenses', JSON.stringly(expenses));
+    updateUI;
+    closeModal('delete-modal');
+});
+
+// open modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+// close modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// filter expense by category
+categoryFilter.addEventListener('change', () => {
+    const filterValue = categoryFilter.value;
+    if (filterValue !== 'All') {
+        expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+        expenses = expenses.filter(exp => exp.category === filterValue);
+    } else {
+        expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    } updateUI();
+});
+
+updateUI();
