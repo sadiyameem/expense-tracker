@@ -124,6 +124,13 @@ table th {
 
 .delete-btn {
     background-color: #dc3545;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .filter-group {
@@ -155,7 +162,7 @@ table th {
     padding: 20px 30px;
     border-radius: 10px;
     width: 400px;
-    box-shadow: 0 6px 15px rbga(0,0,0,0.3);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -177,7 +184,7 @@ table th {
     color: #333;
 }
 
-.modal-cpntent input,
+.modal-content input,
 .modal-content select {
     margin: 10px 0;
     padding: 10px;

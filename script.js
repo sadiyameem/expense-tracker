@@ -5,7 +5,7 @@ const addExpenseButton = document.getElementById('add-expense');
 const expenseName = document.getElementById('expense-name');
 const expenseAmount = document.getElementById('expense-amount');
 const expenseCategory = document.getElementById('expense-category');
-const expensedate = document.getElementById('expense-date');
+const expenseDate = document.getElementById('expense-date');
 
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 let editingExpenseId = null;
@@ -26,23 +26,23 @@ function updateUI() {
             const row = document.createElement('tr');
             row.innerHTML = `
             <td>${expense.name}</td>
-            <td>$${expenses.amount.toFixed(2)}</td>
+            <td>$${expense.amount.toFixed(2)}</td>
             <td>${expense.category}</td>
-            <td>${expenses.date}
+            <td>${expense.date}
             </td>
-            <button class='edit-btn' onclick='openEditModal(${expense.id})'>Edit</button>
-            <button class='delete-btn' onclick='openDeleteModal(${expense.id})'>Delete</button>
-            </td>;`
+                <button class='edit-btn' onclick='openEditModal(${expense.id})'>Edit</button>
+                <button class='delete-btn' onclick='openDeleteModal(${expense.id})'>Delete</button>
+            </td>`
             expenseTable.appendChild(row);
             total += expense.amount;
         });
     }
-    totalExpenseDisplay.textCount = total.toFixed(2);
+    totalExpenseDisplay.textContent = total.toFixed(2);
 }
 
 // check to see if able to add expenses button
 function checkInputs() {
-    if (expenseName.ariaValueMax.trim() && expenseAmount.value && expenseCategory.value && expensedate.value) {
+    if (expenseName.value.trim() && expenseAmount.value && expenseCategory.value && expenseDate.value) {
         addExpenseButton.disabled = false;
     } else {
         addExpenseButton.disabled = true;
@@ -59,20 +59,20 @@ addExpenseButton.addEventListener('click', () => {
     const name = expenseName.value.trim();
     const amount = parseFloat(expenseAmount.value);
     const category = expenseCategory.value;
-    const date = expensedate.value;
+    const date = expenseDate.value;
 
     if (!name || isNaN(amount) || !date) {
         alert('Please fill in all fields.');
         return;
     }
     const expense = { id: Date.now(), name, amount, category, date };
-    expense.push(expense);
+    expenses.push(expense);
     localStorage.setItem('expenses', JSON.stringify(expenses));
 
     expenseName.value = '';
     expenseAmount.value = '';
     expenseCategory.value = '';
-    expensedate.value = '';
+    expenseDate.value = '';
     addExpenseButton.disabled = true;
 
     updateUI();
@@ -89,7 +89,7 @@ function openEditModal(id) {
     document.getElementById('edit-expense-date').value = expense.date;
 
     editingExpenseId = id;
-    openEditModal('edit-modal');
+    openModal('edit-modal');
 }
 
 // save edited expenses
@@ -106,7 +106,7 @@ document.getElementById('confirm-edit').addEventListener('click', () => {
     const index = expenses.findIndex(exp => exp.id === editingExpenseId);
     if (index > -1) {
         expenses[index] = { id: editingExpenseId, name, amount, category, date };
-        localStorage.setItem('expenses', JSON.stringly(expenses));
+        localStorage.setItem('expenses', JSON.stringify(expenses));
         updateUI();
     }
     closeModal('edit-modal');
@@ -115,14 +115,14 @@ document.getElementById('confirm-edit').addEventListener('click', () => {
 // open the delete confirmation modal
 function openDeleteModal(id) {
     deletingExpenseId = id;
-    openEditModal('delete-modal');
+    openModal('delete-modal');
 }
 
 // confirm and delete expense
 document.getElementById('confirm-delete').addEventListener('click', () => {
     expenses = expenses.filter(exp => exp.id !== deletingExpenseId);
-    localStorage.setItem('expenses', JSON.stringly(expenses));
-    updateUI;
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+    updateUI();
     closeModal('delete-modal');
 });
 
