@@ -17,7 +17,7 @@ body {
 header {
     padding: 20px;
     text-align: center;
-    background-color: #007bff;
+    background-color: #7D27F5;
     color: white;
 }
 
@@ -45,15 +45,11 @@ h1 {
 }
 
 .form-group button {
-    background-color: #28a745;
+    background-color: #4000c1;
     color: white;
     border: none;
     cursor: pointer;
     transition: 0.3s;
-}
-
-.form-group button:hover {
-    background-color: #218838;
 }
 
 button:disabled {
@@ -108,7 +104,7 @@ table th {
 }
 
 .edit-btn {
-    background-color: #007bff;
+    background-color: #ed8fff;
     color: white;
     border: none;
     outline: none;
@@ -116,14 +112,11 @@ table th {
     padding: 10px 12px;
     cursor: pointer;
     font-size: 16px;
-}
-
-.edit-btn:hover {
-    background-color: #0056b3;
+    margin: 5px;
 }
 
 .delete-btn {
-    background-color: #dc3545;
+    background-color: #b55cff;
     color: white;
     border: none;
     outline: none;
@@ -195,25 +188,19 @@ table th {
 }
 
 .modal-content .confirm-btn {
-    background-color: #28a745;
+    background-color: #ed8fff;
     color: white;
     font-weight: bold;
     transition: 0.3s;
-}
-
-.modal-content .confirm-btn:hover {
-    background-color: #218838;
+    cursor: pointer;
 }
 
 .modal-content .cancel-btn {
-    background-color: #dc3545;
+    background-color: #b55cff;
     color: white;
     font-weight: bold;
     transition: 0.3s;
-}
-
-.modal-content .cancel-btn:hover {
-    background-color: #a71d2a;
+    cursor: pointer;
 }
 
 .modal-content p {
